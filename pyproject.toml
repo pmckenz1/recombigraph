@@ -12,7 +12,11 @@ authors = [
     { name = "Patrick McKenzie" }
 ]
 license = { text = "MIT" }
-dependencies = []
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "networkx",
+]
 
 [tool.setuptools]
 packages = ["recombigraph"]
