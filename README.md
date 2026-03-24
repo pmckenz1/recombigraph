@@ -72,7 +72,11 @@ model = rg.PedigreeModel(
 
 # visualize pedigree
 model.draw_pedigree()
+```
 
+![Pedigree](./content/pedigree.svg)
+
+```
 # run simulation
 result = model.simulate()
 

@@ -37,7 +37,6 @@ def build_pedigree_graph(records, arrows_to_parents=False):
 
     return G
 
-
 def draw_pedigree_from_records(
     records,
     figsize=(10, 6),
@@ -46,24 +45,44 @@ def draw_pedigree_from_records(
     node_size=1200,
     font_size=8,
     cmap="viridis",
+    savepath=None,
+    dpi=300,
 ):
     """adapted from tskit recommendation"""
     G = build_pedigree_graph(records, arrows_to_parents=arrows_to_parents)
     pos = nx.multipartite_layout(G, subset_key="time", align="vertical")
 
     plt.figure(figsize=figsize)
-    nx.draw_networkx(
+    
+    # nodes
+    nx.draw_networkx_nodes(
         G,
         pos,
-        with_labels=True,
         node_color=[G.nodes[n]["time"] for n in G.nodes],
         cmap=cmap,
         node_size=node_size,
+        alpha=node_alpha,
+    )
+
+    # edges
+    nx.draw_networkx_edges(
+        G,
+        pos,
+        arrows=True,
+        alpha=0.7,
+    )
+
+    # labels (no alpha applied)
+    nx.draw_networkx_labels(
+        G,
+        pos,
         font_size=font_size,
         font_color="black",
-        arrows=True,
-        alpha=node_alpha,
     )
     plt.gca().invert_yaxis()
     plt.axis("off")
+
+    if savepath is not None:
+        plt.savefig(savepath, dpi=dpi, bbox_inches="tight")
+
     plt.show()
