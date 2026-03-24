@@ -2,10 +2,14 @@ from matplotlib import pyplot as plt
 import networkx as nx
 
 
+def _is_missing_parent(x):
+    return x is None or x == "NA"
+
+
 def compute_generation_map(records):
     generation = {}
     for name, parent1, parent2 in records:
-        if parent1 == "NA" and parent2 == "NA":
+        if _is_missing_parent(parent1) and _is_missing_parent(parent2):
             generation[name] = 0
         else:
             generation[name] = max(generation[parent1], generation[parent2]) + 1
@@ -19,13 +23,13 @@ def build_pedigree_graph(records, arrows_to_parents=False):
     for name, parent1, parent2 in records:
         G.add_node(name, time=generation[name])
 
-        if parent1 != "NA":
+        if not _is_missing_parent(parent1):
             if arrows_to_parents:
                 G.add_edge(name, parent1)
             else:
                 G.add_edge(parent1, name)
 
-        if parent2 != "NA":
+        if not _is_missing_parent(parent2):
             if arrows_to_parents:
                 G.add_edge(name, parent2)
             else:
@@ -43,6 +47,7 @@ def draw_pedigree_from_records(
     font_size=8,
     cmap="viridis",
 ):
+"""adapted from tskit recommendation"""
     G = build_pedigree_graph(records, arrows_to_parents=arrows_to_parents)
     pos = nx.multipartite_layout(G, subset_key="time", align="vertical")
 
