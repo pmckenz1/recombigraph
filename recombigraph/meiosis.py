@@ -1,3 +1,4 @@
+from typing import Optional
 import numpy as np
 from .ancestry import Homolog, Segment, Slot
 
