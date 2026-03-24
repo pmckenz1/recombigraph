@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recombigraph"
+version = "0.1.0"
+description = "Pedigree-based recombination simulation with explicit homolog tracking."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Patrick McKenzie" }
+]
+license = { text = "MIT" }
+dependencies = []
+
+[tool.setuptools]
+packages = ["recombigraph"]
