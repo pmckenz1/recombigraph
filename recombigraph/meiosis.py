@@ -80,6 +80,7 @@ class SlotRecord:
         )
 
 
+
 def make_slots(h0: Homolog, h1: Homolog) -> list[SlotRecord]:
     """produce the four fixed chromatids/slots for a diploid bivalent"""
     s0 = h0.to_slot(0)
@@ -87,10 +88,10 @@ def make_slots(h0: Homolog, h1: Homolog) -> list[SlotRecord]:
     s2 = h1.to_slot(2)
     s3 = h1.to_slot(3)
     return [
-        SlotRecord(s0.slot_id, s0.homolog_id, s0.chromosome, s0.length, [seg.copy() for seg in s0.segments], []),
-        SlotRecord(s1.slot_id, s1.homolog_id, s1.chromosome, s1.length, [seg.copy() for seg in s1.segments], []),
-        SlotRecord(s2.slot_id, s2.homolog_id, s2.chromosome, s2.length, [seg.copy() for seg in s2.segments], []),
-        SlotRecord(s3.slot_id, s3.homolog_id, s3.chromosome, s3.length, [seg.copy() for seg in s3.segments], []),
+        SlotRecord(s0.slot_id, s0.homolog_id, s0.chromosome, s0.length, []),
+        SlotRecord(s1.slot_id, s1.homolog_id, s1.chromosome, s1.length, []),
+        SlotRecord(s2.slot_id, s2.homolog_id, s2.chromosome, s2.length, []),
+        SlotRecord(s3.slot_id, s3.homolog_id, s3.chromosome, s3.length, []),
     ]
 
 
