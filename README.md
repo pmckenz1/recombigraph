@@ -31,18 +31,19 @@
 
 ## Installation
 
-Install from PyPI:
+Currently: Source install
 
 ```bash
-pip install recombigraph
+pip install git+https://github.com/pmckenz1/recombigraph.git
 ```
 
-Optional extras:
+*[Coming soon]* Install from PyPI:
 
 ```bash
-pip install "recombigraph[dataframe]"
-pip install "recombigraph[tskit]"
-pip install "recombigraph[all]"
+pip install recombigraph                  # core simulation package
+pip install "recombigraph[dataframe]"     # adds pandas helpers
+pip install "recombigraph[tskit]"         # adds tskit export
+pip install "recombigraph[all]"           # installs all optional extras
 ```
 ---
 
