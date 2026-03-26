@@ -118,6 +118,67 @@ result
 result.individuals["F3_0"]
 ```
 
+Example output: result.individuals["F3_0"]
+
+```
+SimIndividual(
+    individual_id='F3_0', 
+    time=3, 
+    homologs_by_chromosome={
+        'A': [
+            Homolog(
+                homolog_id=60, 
+                chromosome='A', 
+                individual_id='F3_0', 
+                time=3, 
+                length=100.0, 
+                segments=[
+                    Segment(left=0.0, right=66.31224791052625, parent_homolog_id=45, founder_homolog_id=13), 
+                    Segment(left=66.31224791052625, right=100.0, parent_homolog_id=45, founder_homolog_id=12)
+                    ]
+            ), 
+            Homolog(
+                homolog_id=61, 
+                chromosome='A', 
+                individual_id='F3_0', 
+                time=3, 
+                length=100.0, 
+                segments=[
+                    Segment(left=0.0, right=74.53017446460717, parent_homolog_id=49, founder_homolog_id=8), 
+                    Segment(left=74.53017446460717, right=74.98318679719566, parent_homolog_id=49, founder_homolog_id=4), 
+                    Segment(left=74.98318679719566, right=100.0, parent_homolog_id=49, founder_homolog_id=5)
+                    ]
+                )
+            ], 
+        'B': [
+            Homolog(
+                homolog_id=62, 
+                chromosome='B', 
+                individual_id='F3_0', 
+                time=3, 
+                length=50.0, 
+                segments=[
+                    Segment(left=0.0, right=40.93653676280072, parent_homolog_id=46, founder_homolog_id=2), 
+                    Segment(left=40.93653676280072, right=50.0, parent_homolog_id=47, founder_homolog_id=14)
+                    ]
+                ), 
+            Homolog(
+                homolog_id=63, 
+                chromosome='B', 
+                individual_id='F3_0', 
+                time=3, 
+                length=50.0, 
+                segments=[
+                    Segment(left=0.0, right=23.757990827567365, parent_homolog_id=51, founder_homolog_id=6),
+                    Segment(left=23.757990827567365, right=38.768579535484946, parent_homolog_id=51, founder_homolog_id=7), 
+                    Segment(left=38.768579535484946, right=50.0, parent_homolog_id=51, founder_homolog_id=6)
+                    ]
+                )
+            ]
+        }
+    )
+```
+
 For easy inspection:
 
 ```python
@@ -187,21 +248,3 @@ for tree in islice(ts.trees(), 3):
 ```
 
 This makes `pedigraph-sim` compatible with the broader `tskit` ecosystem.
-
----
-
-## Example output
-
-```python
-SimIndividual(
-    individual_id='F3_0',
-    time=3,
-    homologs_by_chromosome={...}
-)
-```
-
----
-
-## License
-
-MIT
