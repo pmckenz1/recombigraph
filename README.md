@@ -85,7 +85,7 @@ model = pg.PedigreeModel(
 model.draw_pedigree()
 ```
 
-![Pedigree](./content/pedigree.pdf)
+![Pedigree](./content/pedigree.jpg)
 
 ```python
 # run simulation
