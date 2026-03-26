@@ -1,11 +1,11 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Tests](https://github.com/pmckenz1/recombigraph/actions/workflows/tests.yml/badge.svg)
 
-# recombigraph
+# pedigraph-sim
 
 **Pedigree-based recombination simulation with explicit homolog tracking**
 
-`recombigraph` simulates recombination along user-defined pedigrees while explicitly tracking the ancestry of chromosome segments through time. It's designed for applications where inheritance structure matters, like:
+`pedigraph-sim` simulates recombination along user-defined pedigrees while explicitly tracking the ancestry of chromosome segments through time. It's designed for applications where inheritance structure matters, like:
 
 - studying pedigree-based genetic processes
 - benchmarking inference methods
@@ -34,23 +34,23 @@
 Currently: Source install
 
 ```bash
-pip install git+https://github.com/pmckenz1/recombigraph.git
+pip install git+https://github.com/pmckenz1/pedigraph-sim.git
 ```
 
 *[Coming soon]* Install from PyPI:
 
 ```bash
-pip install recombigraph                  # core simulation package
-pip install "recombigraph[dataframe]"     # adds pandas helpers
-pip install "recombigraph[tskit]"         # adds tskit export
-pip install "recombigraph[all]"           # installs all optional extras
+pip install pedigraph-sim                 # core simulation package
+pip install "pedigraph-sim[dataframe]"    # adds pandas helpers
+pip install "pedigraph-sim[tskit]"        # adds tskit export
+pip install "pedigraph-sim[all]"          # installs all optional extras
 ```
 ---
 
 ## Quick Start
 
 ```python
-import recombigraph as rg
+import pedigraph_sim as pg
 
 gen_list = [
     ['P0', 'NA', 'NA'],
@@ -75,7 +75,7 @@ gen_list = [
     ['F3_4', 'F2_2', 'F2_2'],
 ]
 
-model = rg.PedigreeModel(
+model = pg.PedigreeModel(
     pedigree=gen_list,
     chromosomes={"A": 100.0, "B": 50.0},
     seed=123,
@@ -95,7 +95,7 @@ result = model.simulate()
 result.individuals["F3_0"]
 ```
 
-`result.individuals_dataframe()`, `result.homologs_dataframe()`, and `result.segments_dataframe()` require the `dataframe` extra. `rg.to_tskit(...)` requires the `tskit` extra.
+`result.individuals_dataframe()`, `result.homologs_dataframe()`, and `result.segments_dataframe()` require the `dataframe` extra. `pg.to_tskit(...)` requires the `tskit` extra.
 
 
 #### Example output: result.individuals["F3_0"]

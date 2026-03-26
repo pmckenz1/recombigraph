@@ -1,8 +1,8 @@
-import recombigraph as rg
+import pedigraph_sim as pg
 
 
 def test_basic_simulation_builds_expected_individuals():
-    model = rg.PedigreeModel(
+    model = pg.PedigreeModel(
         pedigree=[
             ("child", "parent1", "parent2"),
             ("parent2", None, None),

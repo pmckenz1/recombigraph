@@ -1,4 +1,4 @@
-"""recombigraph: pedigree-based recombination simulation with explicit homolog tracking."""
+"""pedigraph-sim: pedigree-based recombination simulation with explicit homolog tracking."""
 
 from typing import Any
 

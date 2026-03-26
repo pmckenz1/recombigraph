@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Optional
 from typing import TYPE_CHECKING
 
-from recombigraph.arg import LocalForest, LocalForestSequence
+from pedigraph_sim.arg import LocalForest, LocalForestSequence
 
 if TYPE_CHECKING:
     from .simulate import SimulationResult
@@ -144,7 +144,7 @@ def to_tskit(result: "SimulationResult", seq: LocalForestSequence) -> Any:
         ind_row = get_individual_row(h.individual_id)
         flags = tskit.NODE_IS_SAMPLE if hid in sample_set else 0
 
-        # recombigraph time runs forward; tskit time runs backward
+        # pedigraph-sim time runs forward; tskit time runs backward
         tskit_time = max_time - float(h.time)
 
         node_row = tables.nodes.add_row(

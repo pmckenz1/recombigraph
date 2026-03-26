@@ -1,10 +1,10 @@
 import pytest
 
-import recombigraph as rg
+import pedigraph_sim as pg
 
 
 def make_three_generation_model():
-    return rg.PedigreeModel(
+    return pg.PedigreeModel(
         pedigree=[
             ("gp1", None, None),
             ("gp2", None, None),
@@ -29,7 +29,7 @@ def test_local_forests_end_to_end_export():
     ]
 
     seq = result.local_forests("chr1", sample_ids)
-    records = rg.to_newick_records(result, seq)
+    records = pg.to_newick_records(result, seq)
 
     assert len(seq) >= 1
     assert seq.breakpoints()[0] == 0.0
@@ -51,7 +51,7 @@ def test_local_forests_end_to_end_export():
 
 def test_pedigree_rejects_exactly_one_parent():
     with pytest.raises(ValueError, match="either 0 parents or 2 parents"):
-        rg.PedigreeModel(
+        pg.PedigreeModel(
             pedigree=[
                 ("p1", None, None),
                 ("child", "p1", None),
@@ -72,7 +72,7 @@ def test_local_forests_rejects_mixed_chromosome_samples():
 
 
 def test_local_forests_rejects_unknown_chromosome():
-    model = rg.PedigreeModel(
+    model = pg.PedigreeModel(
         pedigree=[
             ("p1", None, None),
             ("p2", None, None),
