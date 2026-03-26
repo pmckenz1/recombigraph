@@ -46,24 +46,28 @@ By grounding ancestry in explicit pedigrees and mechanistic models of recombinat
 
 ## Installation
 
-Currently: source install
+### From PyPI (recommended):
+
+```bash
+pip install pedigraph-sim                 # core simulation
+```
+
+**Optional extras:**
+```bash
+pip install "pedigraph-sim[dataframe]"    # adds pandas helpers
+pip install "pedigraph-sim[tskit]"        # adds tskit export
+pip install "pedigraph-sim[all]"          # installs everything
+```
+
+**Extras:**
+- `dataframe`: enables `.individuals_dataframe()`, `.homologs_dataframe()`, `.segments_dataframe()`
+- `tskit`: enables `pg.to_tskit(...)`
+
+### From source (latest development version)
 
 ```bash
 pip install git+https://github.com/pmckenz1/pedigraph-sim.git
 ```
-
-*[Coming soon]* PyPI install:
-
-```bash
-pip install pedigraph-sim                 # core simulation
-pip install "pedigraph-sim[dataframe]"    # adds pandas helpers
-pip install "pedigraph-sim[tskit]"        # adds tskit export
-pip install "pedigraph-sim[all]"          # everything
-```
-
-**Optional extras:**
-- `dataframe`: enables `.individuals_dataframe()`, `.homologs_dataframe()`, `.segments_dataframe()`
-- `tskit`: enables `pg.to_tskit(...)`
 
 ---
 
