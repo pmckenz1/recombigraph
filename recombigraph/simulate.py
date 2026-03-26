@@ -8,7 +8,6 @@ from .ancestry import Segment, Homolog
 from .meiosis import make_gamete, slot_to_homolog
 from .pedigree import Pedigree
 from .genome import GenomeSpec
-from .visualize import draw_pedigree_from_records
 from .arg import LocalForest, LocalForestSequence, _local_forests
 
 
@@ -353,6 +352,8 @@ class PedigreeModel:
 
     def draw_pedigree(self, **kwargs) -> Any:
         """draw the stored pedigree"""
+        from .visualize import draw_pedigree_from_records
+
         records = [
             [rec.name, rec.parent1, rec.parent2]
             for rec in self.pedigree.records

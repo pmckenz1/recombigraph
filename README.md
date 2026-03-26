@@ -31,18 +31,24 @@
 
 ## Installation
 
-Install from source for now:
+Install from PyPI:
 
 ```bash
-git clone https://github.com/pmckenz1/recombigraph.git
-cd recombigraph
-pip install -e .
+pip install recombigraph
+```
+
+Optional extras:
+
+```bash
+pip install "recombigraph[dataframe]"
+pip install "recombigraph[tskit]"
+pip install "recombigraph[all]"
 ```
 ---
 
 ## Quick Start
 
-```
+```python
 import recombigraph as rg
 
 gen_list = [
@@ -80,13 +86,15 @@ model.draw_pedigree()
 
 ![Pedigree](./content/pedigree.svg)
 
-```
+```python
 # run simulation
 result = model.simulate()
 
 # inspect an individual
 result.individuals["F3_0"]
 ```
+
+`result.individuals_dataframe()`, `result.homologs_dataframe()`, and `result.segments_dataframe()` require the `dataframe` extra. `rg.to_tskit(...)` requires the `tskit` extra.
 
 
 #### Example output: result.individuals["F3_0"]

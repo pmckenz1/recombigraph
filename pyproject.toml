@@ -11,12 +11,27 @@ requires-python = ">=3.9"
 authors = [
     { name = "Patrick McKenzie" }
 ]
-license = { text = "MIT" }
+license = "MIT"
+keywords = ["genetics", "pedigree", "recombination", "simulation", "ancestry"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
 dependencies = [
     "numpy",
     "matplotlib",
     "networkx",
 ]
+
+[project.urls]
+Homepage = "https://github.com/pmckenz1/recombigraph"
+Repository = "https://github.com/pmckenz1/recombigraph"
+Issues = "https://github.com/pmckenz1/recombigraph/issues"
 
 [tool.setuptools]
 packages = ["recombigraph"]
@@ -24,4 +39,14 @@ packages = ["recombigraph"]
 [project.optional-dependencies]
 test = [
     "pytest>=7",
+]
+dataframe = [
+    "pandas",
+]
+tskit = [
+    "tskit",
+]
+all = [
+    "pandas",
+    "tskit",
 ]

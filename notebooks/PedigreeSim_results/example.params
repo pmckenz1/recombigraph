@@ -1,5 +1,0 @@
-PLOIDY = 2
-MAPFUNCTION = HALDANE 
-PEDFILE = ./PedigreeSim_results/example.ped
-CHROMFILE = ./PedigreeSim_results/example.chrom
-OUTPUT = ./PedigreeSim_results/example_out
