@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Optional
 from typing import TYPE_CHECKING
 
 from recombigraph.arg import LocalForest, LocalForestSequence
@@ -58,7 +58,7 @@ def forest_to_newicks(
             return str(node_id)
         return ""
 
-    def rec(node_id: int, parent_id: int | None = None) -> str:
+    def rec(node_id: int, parent_id: Optional[int] = None) -> str:
         children = children_map.get(node_id, ())
         label = node_label(node_id)
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 from dataclasses import dataclass
+from typing import Optional
 from .ancestry import Homolog, Segment, Slot
 
 ####
@@ -97,7 +98,7 @@ def make_slots(h0: Homolog, h1: Homolog) -> list[SlotRecord]:
 
 
 def sample_nonsister_pair(
-    rng: np.random.Generator | None = None,
+    rng: Optional[np.random.Generator] = None,
 ) -> tuple[int, int]:
     """sample one chromatid from each homolog pair"""
     if rng is None:
@@ -196,7 +197,7 @@ def _find_matching_event_index(
     events: list[SlotCrossover],
     pos: float,
     tol: float = 1e-12,
-) -> int | None:
+) -> Optional[int]:
     """find the event occurring at a given position"""
     for idx, ev in enumerate(events):
         if abs(ev.pos - pos) < tol:
@@ -312,7 +313,7 @@ def patterns_to_gametes(
     h0: Homolog,
     h1: Homolog,
     rng: np.random.Generator,
-    centromere_pos: float | None = None,
+    centromere_pos: Optional[float] = None,
 ) -> list[Slot]:
     """convert chromatid patterns into ordered gamete slots"""
     if len(patterns) != 4:
@@ -351,7 +352,7 @@ def simulate_bivalent_meiosis(
     rng: np.random.Generator,
     chiasma_interference: bool = False,
     allow_no_recomb: bool = True,
-    centromere_pos: float | None = None,
+    centromere_pos: Optional[float] = None,
 ) -> list[Slot]:
     """run the full meiosis pipeline for one diploid bivalent"""
     slots = do_crossing_over(
@@ -375,7 +376,7 @@ def simulate_bivalent_meiosis(
 def make_gamete(
     h0: Homolog,
     h1: Homolog,
-    rng: np.random.Generator | None = None,
+    rng: Optional[np.random.Generator] = None,
     chiasma_interference: bool = False,
     allow_no_recomb: bool = True,
 ) -> Slot:

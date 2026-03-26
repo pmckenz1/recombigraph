@@ -1,14 +1,16 @@
+from typing import Optional
+
 from matplotlib import pyplot as plt
 import networkx as nx
 
 
-def _is_missing_parent(x: str | None) -> bool:
+def _is_missing_parent(x: Optional[str]) -> bool:
     """return whether a parent field should be treated as missing"""
     return x is None or x == "NA"
 
 
 def compute_generation_map(
-    records: list[tuple[str, str | None, str | None]],
+    records: list[tuple[str, Optional[str], Optional[str]]],
 ) -> dict[str, int]:
     """compute generation indices from pedigree style records"""
     generation: dict[str, int] = {}
@@ -21,7 +23,7 @@ def compute_generation_map(
 
 
 def build_pedigree_graph(
-    records: list[tuple[str, str | None, str | None]],
+    records: list[tuple[str, Optional[str], Optional[str]]],
     arrows_to_parents: bool = False,
 ):
     """build a directed pedigree graph for plotting"""
@@ -46,14 +48,14 @@ def build_pedigree_graph(
     return G
 
 def draw_pedigree_from_records(
-    records: list[tuple[str, str | None, str | None]],
+    records: list[tuple[str, Optional[str], Optional[str]]],
     figsize: tuple[int, int] = (10, 6),
     arrows_to_parents: bool = False,
     node_alpha: float = 0.6,
     node_size: int = 1200,
     font_size: int = 8,
     cmap: str = "viridis",
-    savepath: str | None = None,
+    savepath: Optional[str] = None,
     dpi: int = 300,
 ):
     """draw a simple pedigree graph from pedigree style records"""

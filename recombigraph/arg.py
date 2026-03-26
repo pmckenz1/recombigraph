@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from collections.abc import Iterator
-from typing import Any, Iterable, TYPE_CHECKING
+from typing import Any, Iterable, Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .ancestry import Homolog, Segment
@@ -109,7 +109,7 @@ def _build_homolog_lookup(result: "SimulationResult") -> dict[int, Any]:
     return out
 
 
-def _segment_covering(homolog: "Homolog", position: float) -> "Segment | None":
+def _segment_covering(homolog: "Homolog", position: float) -> "Optional[Segment]":
     """return the segment covering a genomic position if one exists"""
     for seg in homolog.segments:
         if seg.left <= position < seg.right:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from collections.abc import Iterator
-from typing import Iterable, Optional
+from typing import Iterable, Optional, Tuple, Union
 
 
 @dataclass(frozen=True)
@@ -18,7 +18,7 @@ class PedigreeRecord:
         return self.parent1 is None and self.parent2 is None
 
 
-PedigreeRecordLike = PedigreeRecord | tuple[str, Optional[str], Optional[str]]
+PedigreeRecordLike = Union[PedigreeRecord, Tuple[str, Optional[str], Optional[str]]]
 
 
 class Pedigree:

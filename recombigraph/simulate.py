@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Iterable
+from typing import Any, Dict, Iterable, Optional, Tuple, Union
 import numpy as np
 
 from .ancestry import Segment, Homolog
@@ -153,7 +153,7 @@ def make_offspring_individual(
 def simulate_pedigree(
     pedigree: Pedigree,
     genome: GenomeSpec,
-    seed: int | None = None,
+    seed: Optional[int] = None,
 ) -> SimulationResult:
     """simulate homolog transmission through a pedigree"""
     rng = np.random.default_rng(seed)
@@ -195,9 +195,9 @@ class PedigreeModel:
 
     def __init__(
         self,
-        pedigree: Pedigree | Iterable[tuple[str, str | None, str | None]],
-        chromosomes: GenomeSpec | dict[str, float] | Iterable[tuple[str, float]],
-        seed: int | None = None,
+        pedigree: Union[Pedigree, Iterable[Tuple[str, Optional[str], Optional[str]]]],
+        chromosomes: Union[GenomeSpec, Dict[str, float], Iterable[Tuple[str, float]]],
+        seed: Optional[int] = None,
     ) -> None:
         """normalize inputs and store simulation settings"""
         self.pedigree = pedigree if isinstance(pedigree, Pedigree) else Pedigree(pedigree)

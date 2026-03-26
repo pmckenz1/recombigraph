@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from collections.abc import Iterator
-from typing import Iterable
+from typing import Dict, Iterable, Tuple, Union
 
 
 @dataclass(frozen=True)
@@ -10,8 +10,8 @@ class ChromosomeSpec:
     length: float
 
 
-ChromosomeLike = ChromosomeSpec | tuple[str, float]
-ChromosomeCollection = dict[str, float] | Iterable[ChromosomeLike]
+ChromosomeLike = Union[ChromosomeSpec, Tuple[str, float]]
+ChromosomeCollection = Union[Dict[str, float], Iterable[ChromosomeLike]]
 
 
 class GenomeSpec:
