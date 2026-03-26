@@ -20,10 +20,10 @@
   - founder homolog IDs
 - Multiple chromosomes
 - Built-in pedigree visualization
+- ARG reconstruction and export to `tskit`
 
 ### In the works:
 
-- Top priority: ARG reconstruction
 - Additional map functions
 - Ploidy variation
 
