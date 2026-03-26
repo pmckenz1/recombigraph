@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any, Iterable
 import numpy as np
 
 from .ancestry import Segment, Homolog
@@ -13,6 +14,7 @@ from .arg import LocalForest, LocalForestSequence, _local_forests
 
 @dataclass
 class SimIndividual:
+    """simulated diploid individual with homologs by chromosome"""
     individual_id: str
     time: int
     homologs_by_chromosome: dict[str, list[Homolog]]
@@ -20,11 +22,17 @@ class SimIndividual:
 
 @dataclass
 class SimulationResult:
+    """simulation output with individuals pedigree and genome"""
     individuals: dict[str, SimIndividual]
     pedigree: Pedigree
     genome: GenomeSpec
 
-    def local_forests(self, chromosome: str, sample_homolog_ids) -> LocalForestSequence:
+    def local_forests(
+        self,
+        chromosome: str,
+        sample_homolog_ids: Iterable[int],
+    ) -> LocalForestSequence:
+        """build local ancestry forests for sampled homologs on one chromosome"""
         sample_homolog_ids = tuple(sample_homolog_ids)
 
         # validate chromosome exists
@@ -73,7 +81,8 @@ def make_founder_individual(
     time: int,
     next_homolog_id: int,
 ) -> tuple[SimIndividual, int]:
-    homologs_by_chromosome = {}
+    """create a founder with one pair of founder homologs per chromosome"""
+    homologs_by_chromosome: dict[str, list[Homolog]] = {}
 
     for chrom in genome:
         h0 = Homolog(
@@ -115,7 +124,8 @@ def make_offspring_individual(
     next_homolog_id: int,
     rng: np.random.Generator,
 ) -> tuple[SimIndividual, int]:
-    homologs_by_chromosome = {}
+    """create an offspring by drawing one gamete from each parent"""
+    homologs_by_chromosome: dict[str, list[Homolog]] = {}
 
     for chrom in genome:
         p1_h0, p1_h1 = parent1.homologs_by_chromosome[chrom.name]
@@ -145,8 +155,9 @@ def simulate_pedigree(
     genome: GenomeSpec,
     seed: int | None = None,
 ) -> SimulationResult:
+    """simulate homolog transmission through a pedigree"""
     rng = np.random.default_rng(seed)
-    individuals = {}
+    individuals: dict[str, SimIndividual] = {}
     next_homolog_id = 0
 
     for rec in pedigree:
@@ -180,12 +191,21 @@ def simulate_pedigree(
 
 
 class PedigreeModel:
-    def __init__(self, pedigree, chromosomes, seed: int | None = None):
+    """convenience wrapper around pedigree simulation"""
+
+    def __init__(
+        self,
+        pedigree: Pedigree | Iterable[tuple[str, str | None, str | None]],
+        chromosomes: GenomeSpec | dict[str, float] | Iterable[tuple[str, float]],
+        seed: int | None = None,
+    ) -> None:
+        """normalize inputs and store simulation settings"""
         self.pedigree = pedigree if isinstance(pedigree, Pedigree) else Pedigree(pedigree)
         self.genome = chromosomes if isinstance(chromosomes, GenomeSpec) else GenomeSpec(chromosomes)
         self.seed = seed
 
-    def draw_pedigree(self, **kwargs):
+    def draw_pedigree(self, **kwargs) -> Any:
+        """draw the stored pedigree"""
         records = [
             [rec.name, rec.parent1, rec.parent2]
             for rec in self.pedigree.records
@@ -193,6 +213,7 @@ class PedigreeModel:
         return draw_pedigree_from_records(records, **kwargs)
 
     def simulate(self) -> SimulationResult:
+        """run the simulation with the stored seed"""
         return simulate_pedigree(
             pedigree=self.pedigree,
             genome=self.genome,

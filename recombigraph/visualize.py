@@ -2,12 +2,16 @@ from matplotlib import pyplot as plt
 import networkx as nx
 
 
-def _is_missing_parent(x):
+def _is_missing_parent(x: str | None) -> bool:
+    """return whether a parent field should be treated as missing"""
     return x is None or x == "NA"
 
 
-def compute_generation_map(records):
-    generation = {}
+def compute_generation_map(
+    records: list[tuple[str, str | None, str | None]],
+) -> dict[str, int]:
+    """compute generation indices from pedigree style records"""
+    generation: dict[str, int] = {}
     for name, parent1, parent2 in records:
         if _is_missing_parent(parent1) and _is_missing_parent(parent2):
             generation[name] = 0
@@ -16,7 +20,11 @@ def compute_generation_map(records):
     return generation
 
 
-def build_pedigree_graph(records, arrows_to_parents=False):
+def build_pedigree_graph(
+    records: list[tuple[str, str | None, str | None]],
+    arrows_to_parents: bool = False,
+):
+    """build a directed pedigree graph for plotting"""
     G = nx.DiGraph()
     generation = compute_generation_map(records)
 
@@ -38,17 +46,17 @@ def build_pedigree_graph(records, arrows_to_parents=False):
     return G
 
 def draw_pedigree_from_records(
-    records,
-    figsize=(10, 6),
-    arrows_to_parents=False,
-    node_alpha=0.6,
-    node_size=1200,
-    font_size=8,
-    cmap="viridis",
-    savepath=None,
-    dpi=300,
+    records: list[tuple[str, str | None, str | None]],
+    figsize: tuple[int, int] = (10, 6),
+    arrows_to_parents: bool = False,
+    node_alpha: float = 0.6,
+    node_size: int = 1200,
+    font_size: int = 8,
+    cmap: str = "viridis",
+    savepath: str | None = None,
+    dpi: int = 300,
 ):
-    """adapted from tskit recommendation"""
+    """draw a simple pedigree graph from pedigree style records"""
     G = build_pedigree_graph(records, arrows_to_parents=arrows_to_parents)
     pos = nx.multipartite_layout(G, subset_key="time", align="vertical")
 

@@ -1,11 +1,16 @@
 from __future__ import annotations
 
 from typing import Any
+from typing import TYPE_CHECKING
 
 from recombigraph.arg import LocalForest, LocalForestSequence
 
-def _build_homolog_lookup(result) -> dict[int, Any]:
-    out = {}
+if TYPE_CHECKING:
+    from .simulate import SimulationResult
+
+def _build_homolog_lookup(result: "SimulationResult") -> dict[int, Any]:
+    """build a homolog lookup keyed by homolog id"""
+    out: dict[int, Any] = {}
     for individual in result.individuals.values():
         for homologs in individual.homologs_by_chromosome.values():
             for homolog in homologs:
@@ -13,7 +18,8 @@ def _build_homolog_lookup(result) -> dict[int, Any]:
     return out
 
 
-def _sample_label(result, homolog_id: int) -> str:
+def _sample_label(result: "SimulationResult", homolog_id: int) -> str:
+    """build a stable label for a sampled homolog"""
     h = _build_homolog_lookup(result)[homolog_id]
     chrom = h.chromosome
     ind = h.individual_id
@@ -27,18 +33,20 @@ def _sample_label(result, homolog_id: int) -> str:
 
 
 def _branch_length(result, parent_id: int, child_id: int) -> float:
+    """return the time difference between parent and child homologs"""
     lookup = _build_homolog_lookup(result)
     parent = lookup[parent_id]
     child = lookup[child_id]
     return float(child.time - parent.time)
 
 def forest_to_newicks(
-    result,
+    result: "SimulationResult",
     forest: LocalForest,
     *,
     label_samples: bool = True,
     include_internal_labels: bool = False,
 ) -> list[str]:
+    """serialize one local forest into one or more newick strings"""
     lookup = _build_homolog_lookup(result)
     children_map = forest.children_map()
     sample_set = set(forest.sample_homolog_ids)
@@ -72,12 +80,13 @@ def forest_to_newicks(
     return [rec(root) for root in forest.roots()]
 
 def to_newick_records(
-    result,
+    result: "SimulationResult",
     seq: LocalForestSequence,
     *,
     as_list: bool = True,
-) -> list[dict]:
-    out = []
+) -> list[dict[str, Any]]:
+    """convert a local forest sequence into record dictionaries"""
+    out: list[dict[str, Any]] = []
     for forest in seq:
         newicks = forest_to_newicks(result, forest)
         out.append(
@@ -94,12 +103,14 @@ def to_newick_records(
         )
     return out
 
-def to_dataframe(result, seq: LocalForestSequence):
+def to_dataframe(result: "SimulationResult", seq: LocalForestSequence) -> Any:
+    """convert newick records into a pandas dataframe"""
     import pandas as pd
 
     return pd.DataFrame(to_newick_records(result, seq, as_list=True))
 
-def to_tskit(result, seq: LocalForestSequence):
+def to_tskit(result: "SimulationResult", seq: LocalForestSequence) -> Any:
+    """convert a local forest sequence into a tskit tree sequence"""
     try:
         import tskit
     except ImportError as e:
@@ -110,7 +121,7 @@ def to_tskit(result, seq: LocalForestSequence):
 
     tables = tskit.TableCollection(sequence_length=seq.right)
 
-    # optional but nice
+    # store a little metadata so downstream tools can recover ids
     tables.individuals.metadata_schema = tskit.MetadataSchema.permissive_json()
     tables.nodes.metadata_schema = tskit.MetadataSchema.permissive_json()
 
@@ -118,6 +129,7 @@ def to_tskit(result, seq: LocalForestSequence):
     individual_row_for_individual_id: dict[str, int] = {}
 
     def get_individual_row(individual_id: str) -> int:
+        """return the tskit row id for an individual"""
         if individual_id not in individual_row_for_individual_id:
             individual_row_for_individual_id[individual_id] = tables.individuals.add_row(
                 metadata={"individual_id": individual_id}
