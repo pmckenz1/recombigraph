@@ -1,5 +1,6 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Tests](https://github.com/pmckenz1/pedigraph-sim/actions/workflows/tests.yml/badge.svg)
+[![PyPI version](https://img.shields.io/pypi/v/pedigraph-sim.svg)](https://pypi.org/project/pedigraph-sim/)
 
 # pedigraph-sim
 
